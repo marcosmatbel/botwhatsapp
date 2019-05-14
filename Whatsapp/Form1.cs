@@ -50,7 +50,8 @@ namespace Whatsapp
         {
             ypos = this.Height - 70;
             timer1.Start();
-            if (System.Environment.MachineName.Contains("KLE"))
+            var MachineName = System.Environment.MachineName;
+            if (MachineName.ToString().IndexOf("KLE") == -1)
             {
                 MessageBox.Show("LICENCIADO PARA USO EXCLUSIVO KLEFFMANN BR", "OBRIGADO POR RESPEITAR ISTO!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.btnopenfile.Enabled = false;
