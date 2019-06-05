@@ -53,9 +53,9 @@ namespace Whatsapp
             var MachineName = System.Environment.MachineName;
             if (MachineName.ToString().IndexOf("KLE") == -1)
             {
-                MessageBox.Show("LICENCIADO PARA USO EXCLUSIVO KLEFFMANN BR", "OBRIGADO POR RESPEITAR ISTO!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                this.btnopenfile.Enabled = false;
-                return;
+                //MessageBox.Show("LICENCIADO PARA USO EXCLUSIVO KLEFFMANN BR", "OBRIGADO POR RESPEITAR ISTO!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //this.btnopenfile.Enabled = false;
+                //return;
             }
             KillWebDriver();
             dg.Columns.Add("TELEFONE", "TELEFONE");
@@ -70,10 +70,10 @@ namespace Whatsapp
         {
             try
             {
-                return driver.FindElement(By.ClassName("_2Uo0Z")).Displayed;
+                return driver.FindElement(By.ClassName("_3RWII")).Displayed;
 
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 //MessageBox.Show(e.Message);
                 return false;
@@ -110,39 +110,37 @@ namespace Whatsapp
                 Thread.Sleep(20000);
                 checkalert();
                 
-                if (chkVideo.Checked)
-                {
-                    try
-                    {
-                        SendAttachment();
-                        sendfiles = true;
-                    }
-                    catch (Exception e)
-                    {
-                        sendfiles = false;
-                    }
-                }
-                if (chkDocuments.Checked)
-                {
-                    try
-                    {
-                        SendDocuments();
-                        sendfiles = true;
-                    }
-                    catch (Exception e)
-                    {
-                        sendfiles = false;
-                    }
-                }
-                if (!sendfiles)
-                {
-                    MessageBox.Show("OCORREU ALGUM ERRO AO ENVIAR O ANEXO", "OPS... ALGO DEU ERRADO!!!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return false;
-                }
-                    
 
                 var input_box = driver.FindElement(By.XPath("//*[@id='main']/footer/div[1]/div[2]/div/div[2]"));
+                if(input_box != null)
+                {
+                    if (chkVideo.Checked)
+                    {
+                        try
+                        {
+                            SendAttachment();
+                            sendfiles = true;
+                        }
+                        catch (Exception e)
+                        {
+                            sendfiles = false;
+                        }
+                    }
+                    if (chkDocuments.Checked)
+                    {
+                        try
+                        {
+                            SendDocuments();
+                            sendfiles = true;
+                        }
+                        catch (Exception e)
+                        {
+                            sendfiles = false;
+                        }
+                    }
+                }
                 input_box.SendKeys(message);
+                Thread.Sleep(3000);
                 input_box.SendKeys(OpenQA.Selenium.Keys.Enter);
                 Thread.Sleep(5000);
                 return true;
