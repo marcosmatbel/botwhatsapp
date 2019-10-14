@@ -104,12 +104,15 @@ namespace Whatsapp
                 checkalert();
                 //Thread.Sleep(5000);
                 //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-                driver.Navigate().GoToUrl("https://wa.me/" + telefone);
-                Thread.Sleep(1000);
-                driver.FindElement(By.XPath("//*[@id='action-button']")).Click();
-                Thread.Sleep(20000);
+                //driver.Navigate().GoToUrl("https://wa.me/" + telefone);
+                driver.Navigate().GoToUrl("https://web.whatsapp.com/send?phone="+ telefone + "&text=&source=&data=");
+                Thread.Sleep(6000);
+                try
+                {
+                    driver.FindElement(By.XPath("//*[@id='action-button']")).Click();
+                    Thread.Sleep(20000);
+                }catch(Exception e){}
                 checkalert();
-                
 
                 var input_box = driver.FindElement(By.XPath("//*[@id='main']/footer/div[1]/div[2]/div/div[2]"));
                 if(input_box != null)
@@ -126,6 +129,7 @@ namespace Whatsapp
                             sendfiles = false;
                         }
                     }
+                    Thread.Sleep(3000);
                     if (chkDocuments.Checked)
                     {
                         try
@@ -138,6 +142,7 @@ namespace Whatsapp
                             sendfiles = false;
                         }
                     }
+                    Thread.Sleep(3000);
                 }
                 input_box.SendKeys(message);
                 Thread.Sleep(3000);
@@ -358,12 +363,12 @@ namespace Whatsapp
 
             if (openFileDialog2.ShowDialog() == DialogResult.OK)
             {
-                var size = new FileInfo(openFileDialog2.FileName).Length;
-                if(size > (16 * 125000))
-                {
-                    MessageBox.Show("TAMANHO EXCEDIDO, MAXIMO PERMITIDO 16MB", "OPS... ALGO DEU ERRADO!!!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                //var size = new FileInfo(openFileDialog2.FileName).Length;
+                //if(size > (16 * 125000))
+                //{
+                //    MessageBox.Show("TAMANHO EXCEDIDO, MAXIMO PERMITIDO 16MB", "OPS... ALGO DEU ERRADO!!!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    return;
+                //}
                 txtMedia.Text = openFileDialog2.FileName;
                 //btnEnviar.Enabled = true;
             }
